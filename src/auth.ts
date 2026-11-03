@@ -4,6 +4,8 @@ import { compare } from "bcryptjs";
 import { sql } from "@/lib/db";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
+
   session: {
     strategy: "jwt",
   },
@@ -58,11 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             String(user.password_hash),
           );
 
-          if (!passwordMatches) {
-            return null;
-          }
-
-          if (user.email_verified !== true) {
+          if (!passwordMatches || user.email_verified !== true) {
             return null;
           }
 
@@ -73,7 +71,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
         } catch (error) {
           console.error("Login verification failed:", error);
-          return null;
+          throw new Error("Login service temporarily unavailable.");
         }
       },
     }),
