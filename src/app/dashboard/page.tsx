@@ -29,6 +29,14 @@ export default async function DashboardPage() {
           View Workout History
         </Link>
 
+        {/* OnBoarding page linking */}
+        <Link
+          href="/onboarding"
+          className="inline-flex h-10 items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/90"
+        >
+          Onboarding
+        </Link>
+
         <SignOutButton />
       </div>
 
