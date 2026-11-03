@@ -1,8 +1,9 @@
+import { Suspense } from "react";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import WorkoutHistoryContent from "./workout-history-content";
 
-export default async function WorkoutHistoryPage() {
+async function WorkoutHistoryPageContent() {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -10,4 +11,12 @@ export default async function WorkoutHistoryPage() {
   }
 
   return <WorkoutHistoryContent />;
+}
+
+export default function WorkoutHistoryPage() {
+  return (
+    <Suspense fallback={<div>Loading workout history...</div>}>
+      <WorkoutHistoryPageContent />
+    </Suspense>
+  );
 }

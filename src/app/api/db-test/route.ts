@@ -1,6 +1,9 @@
+import { connection } from "next/server";
 import { sql } from "@/lib/db";
 
 export async function GET() {
+  await connection();
+
   try {
     const result = await sql`
       SELECT
@@ -14,7 +17,6 @@ export async function GET() {
       data: result[0],
     });
   } catch (error) {
-    // Keep technical details in the server terminal only.
     console.error("Database connection test failed:", error);
 
     return Response.json(

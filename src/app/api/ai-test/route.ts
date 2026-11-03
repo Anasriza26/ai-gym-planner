@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
+import { connection } from "next/server";
 import { gemini } from "@/lib/gemini";
 
 export async function GET() {
+  await connection();
+
   try {
     const response = await gemini.models.generateContent({
       model: "gemini-3.5-flash-lite",
